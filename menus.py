@@ -4,6 +4,7 @@ def menu_principal():
     print("="*80)
     print("1 - Gerenciar Produtos")
     print("2 - Gerenciar Mercados")
+    print("3 - Exportar relatorios")
     print("0 - Sair")
     print("="*80)
 
@@ -26,3 +27,6 @@ def menu_produtos():
     print("3 - Ativar/Desativar Produto")
     print("0 - Voltar")
     print("="*80)
+
+def limpar_tela_ansi():
+    print("\033[2J\033[H", end="")

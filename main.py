@@ -8,22 +8,27 @@ def main():
     mercados_cadastrados = []
     produtos_cadastrados = []
     menu_principal()
-    opcao = input("\nEscolha uma opção: ")
+    opcao_menu_principal = input("\nEscolha uma opção: ")
+    print("\033[2J\033[H", end="")
     while True:
-        match opcao:
+        match opcao_menu_principal:
             case "1":
                 while True:
                     menu_produtos()
-                    opcao = input("\nEscolha uma opção: ")
-                    match opcao:
+                    opcao_submenu = input("\nEscolha uma opção: ")
+                    print("\033[2J\033[H", end="")
+                    match opcao_submenu:
                         case "1":
-                            novo_produto = cadastrar_produto() 
+                            novo_produto = cadastrar_produto()
+                            print("\033[2J\033[H", end="") 
                             if novo_produto:
                                 produtos_cadastrados.append(novo_produto)
                         case "2":
                             listar_produtos(produtos_cadastrados)
+                            print("\033[2J\033[H", end="")
                         case "3":
                             codigo_produto = input("Digite o código do produto para ativar/desativar: ")
+                            print("\033[2J\033[H", end="")
                             for produto in produtos_cadastrados:
                                 if produto.codigo == codigo_produto:
                                     if produto.ativo:
@@ -32,18 +37,18 @@ def main():
                                     else:
                                         produto.ativar()
                                         print(f"Produto '{produto.nome}' ativado com sucesso!")
-                                    break
                         case "0":
-                            break
+                            print("Voltando ao menu...")
+                            return
                         case _:
                             print("\n✗ Opção inválida!")
-                            break
             case "2":
                 menu_mercados()
-                opcao = input("\nEscolha uma opção: ")
-                match opcao:
+                opcao_submenu = input("\nEscolha uma opção: ")
+                print("\033[2J\033[H", end="")
+                match opcao_submenu:
                     case "1":
-                        novo_mercado = cadastrar_mercado() 
+                        novo_mercado = cadastrar_mercado()
                         if novo_mercado:
                             mercados_cadastrados.append(novo_mercado)
                     case "2":
@@ -58,16 +63,18 @@ def main():
                                 else:
                                     mercado.ativar()
                                     print(f"Mercado '{mercado.nome}' ativado com sucesso!")
-                                break
+                        print("\033[2J\033[H", end="")
                     case "0":
-                        break
+                        return
                     case _:
                         print("\n✗ Opção inválida!")
             case "3":
                 print("\nEXPORTAR MERCADOS PARA CSV")
                 print("1 - Exportar mercados cadastrados para CSV")
                 print("2 - Exportar produtos cadastrados para CSV")
+                print("0 - Voltar")
                 opcao_exportacao = input("\nEscolha uma opção: ")
+                print("\033[2J\033[H", end="")
                 match opcao_exportacao:
                     case "1":
                         nome_arquivo = input("Digite o nome do arquivo CSV para salvar os mercados: ")
@@ -75,6 +82,9 @@ def main():
                     case "2":
                         nome_arquivo = input("Digite o nome do arquivo CSV para salvar os produtos: ")
                         salvar_mercados_csv(produtos_cadastrados, nome_arquivo)
+                    case "0":
+                        print("Voltando ao menu principal...")
+                        break
                     case _:
                         print("\n✗ Opção inválida!")
             case "0":
@@ -82,7 +92,6 @@ def main():
                 break
             case _:
                 print("\n✗ Opção inválida!")
-                break
 
 if __name__ == "__main__":
     main()

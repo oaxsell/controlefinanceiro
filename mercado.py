@@ -18,6 +18,7 @@ class Mercado:
 
 def pausar():
     input("\nPressione ENTER para continuar...")
+    print("\033[2J\033[H", end="")
 
 def cadastrar_mercado():
     print("CADASTRAR MERCADO")    
@@ -25,6 +26,7 @@ def cadastrar_mercado():
     site = input("Site: ")
     mercado = Mercado(nome, site, True)
     print(f"\nMercado '{nome}' cadastrado com sucesso!")
+    pausar()
     return mercado
 
 def listar_mercados(mercados_cadastrados):
@@ -36,24 +38,4 @@ def listar_mercados(mercados_cadastrados):
     for mercado in mercados_cadastrados:
         print(mercado)
         print("-"*70)
-
-def gerenciar_mercados():
-    while True:
-        menu_mercados()
-        opcao = input("\nEscolha uma opção: ")
-        
-        match opcao:
-            case "1":
-                cadastrar_mercado()
-                pausar()
-            case "2":
-                Mercado.listar_mercados()
-                pausar()
-            case "3":
-                print("\n(Funcionalidade de ativar/desativar mercado)")
-                pausar()
-            case "0":
-                break
-            case _:
-                print("\n✗ Opção inválida!")
-                pausar()
+    pausar()
