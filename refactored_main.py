@@ -19,21 +19,19 @@ class SistemaGerenciamento:
     def toggle_status_produto(self):
         """Ativa ou desativa um produto."""
         codigo = input("Digite o código do produto para ativar/desativar: ")
+        self.limpar_tela()
         
         produto = next((p for p in self.produtos if p.codigo == codigo), None)
         
         if produto:
             if produto.ativo:
                 produto.desativar()
-                print(f"Produto '{produto.nome}' desativado com sucesso!")
+                print(f"✓ Produto '{produto.nome}' desativado com sucesso!")
             else:
                 produto.ativar()
-                print(f"Produto '{produto.nome}' ativado com sucesso!")
+                print(f"✓ Produto '{produto.nome}' ativado com sucesso!")
         else:
-            print(f"Produto com código '{codigo}' não encontrado!")
-        
-        input("\nPressione ENTER para continuar...")
-        self.limpar_tela()
+            print(f"✗ Produto com código '{codigo}' não encontrado!")
     
     def toggle_status_mercado(self):
         """Ativa ou desativa um mercado."""
@@ -44,14 +42,13 @@ class SistemaGerenciamento:
         if mercado:
             if mercado.ativo:
                 mercado.desativar()
-                print(f"Mercado '{mercado.nome}' desativado com sucesso!")
+                print(f"✓ Mercado '{mercado.nome}' desativado com sucesso!")
             else:
                 mercado.ativar()
-                print(f"Mercado '{mercado.nome}' ativado com sucesso!")
+                print(f"✓ Mercado '{mercado.nome}' ativado com sucesso!")
         else:
-            print(f"Mercado '{nome}' não encontrado!")
+            print(f"✗ Mercado '{nome}' não encontrado!")
         
-        input("\nPressione ENTER para continuar...")
         self.limpar_tela()
     
     def menu_produtos(self):
@@ -63,9 +60,9 @@ class SistemaGerenciamento:
         }
         
         while True:
-            self.limpar_tela()
             menu_produtos()
             opcao = input("\nEscolha uma opção: ")
+            self.limpar_tela()
             
             if opcao == "0":
                 print("Voltando ao menu principal...")
@@ -75,20 +72,19 @@ class SistemaGerenciamento:
             if acao:
                 acao()
             else:
-                print("Opção inválida!")
-                input("\nPressione ENTER para continuar...")
+                print("✗ Opção inválida!")
     
     def _cadastrar_produto(self):
         """Cadastra um novo produto."""
         novo_produto = cadastrar_produto()
+        self.limpar_tela()
         if novo_produto:
             self.produtos.append(novo_produto)
-        input("\nPressione ENTER para continuar...")
     
     def _listar_produtos(self):
         """Lista todos os produtos cadastrados."""
         listar_produtos(self.produtos)
-        input("\nPressione ENTER para continuar...")
+        self.limpar_tela()
     
     def menu_mercados(self):
         """Gerencia o submenu de mercados."""
@@ -99,9 +95,9 @@ class SistemaGerenciamento:
         }
         
         while True:
-            self.limpar_tela()
             menu_mercados()
             opcao = input("\nEscolha uma opção: ")
+            self.limpar_tela()
             
             if opcao == "0":
                 print("Voltando ao menu principal...")
@@ -111,32 +107,27 @@ class SistemaGerenciamento:
             if acao:
                 acao()
             else:
-                print("Opção inválida!")
-                input("\nPressione ENTER para continuar...")
+                print("✗ Opção inválida!")
     
     def _cadastrar_mercado(self):
         """Cadastra um novo mercado."""
         novo_mercado = cadastrar_mercado()
         if novo_mercado:
             self.mercados.append(novo_mercado)
-        input("\nPressione ENTER para continuar...")
     
     def _listar_mercados(self):
         """Lista todos os mercados cadastrados."""
         listar_mercados(self.mercados)
-        input("\nPressione ENTER para continuar...")
     
     def menu_exportacao(self):
         """Gerencia o menu de exportação."""
-        self.limpar_tela()
-        print("=" * 70)
-        print("EXPORTAR PARA CSV".center(70))
-        print("=" * 70)
-        print("\n1 - Exportar mercados cadastrados")
+        print("\nEXPORTAR PARA CSV")
+        print("1 - Exportar mercados cadastrados")
         print("2 - Exportar produtos cadastrados")
         print("0 - Voltar")
         
         opcao = input("\nEscolha uma opção: ")
+        self.limpar_tela()
         
         if opcao == "1":
             self._exportar_dados(self.mercados, "mercados")
@@ -145,25 +136,12 @@ class SistemaGerenciamento:
         elif opcao == "0":
             print("Voltando ao menu principal...")
         else:
-            print("Opção inválida!")
-            input("\nPressione ENTER para continuar...")
+            print("✗ Opção inválida!")
     
     def _exportar_dados(self, dados, tipo):
         """Exporta dados para CSV."""
-        if not dados:
-            print(f"\nNenhum {tipo[:-1]} cadastrado para exportar!")
-            input("\nPressione ENTER para continuar...")
-            return
-        
-        nome_arquivo = input(f"\nDigite o nome do arquivo CSV para salvar os {tipo}: ")
-        
-        try:
-            salvar_mercados_csv(dados, nome_arquivo)
-            print(f"\n{tipo.capitalize()} exportados com sucesso para '{nome_arquivo}'!")
-        except Exception as e:
-            print(f"\nErro ao exportar {tipo}: {e}")
-        
-        input("\nPressione ENTER para continuar...")
+        nome_arquivo = input(f"Digite o nome do arquivo CSV para salvar os {tipo}: ")
+        salvar_mercados_csv(dados, nome_arquivo)
     
     def executar(self):
         """Loop principal do sistema."""
@@ -174,12 +152,11 @@ class SistemaGerenciamento:
         }
         
         while True:
-            self.limpar_tela()
             menu_principal()
             opcao = input("\nEscolha uma opção: ")
+            self.limpar_tela()
             
             if opcao == "0":
-                self.limpar_tela()
                 print("\nSaindo do sistema...")
                 break
             
@@ -187,8 +164,7 @@ class SistemaGerenciamento:
             if acao:
                 acao()
             else:
-                print("Opção inválida!")
-                input("\nPressione ENTER para continuar...")
+                print("✗ Opção inválida!")
 
 
 def main():
